@@ -45,7 +45,7 @@ export default {
 
         const getSummary = async () => {
             state.loading = true
-             const res = await axios.get(`http://api.tvmaze.com/shows/${id}`)
+             const res = await axios.get(`https://api.tvmaze.com/shows/${id}`)
 
             if(res.data){
                 state.show = res?.data
@@ -59,7 +59,7 @@ export default {
 
         const fetchShow = async () =>{
             state.loading = true
-            const res = await axios.get(`http://api.tvmaze.com/shows/${id}`)
+            const res = await axios.get(`https://api.tvmaze.com/shows/${id}`)
 
             if(res.data){
                 state.show = res?.data

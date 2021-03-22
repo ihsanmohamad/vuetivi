@@ -44,7 +44,7 @@ export default {
     const fetchShows = async () =>{
       state.loading =true;
       
-      const res = await axios.get(`http://api.tvmaze.com/shows`)
+      const res = await axios.get(`https://api.tvmaze.com/shows`)
 
       if (res.data) {
         state.shows = res?.data

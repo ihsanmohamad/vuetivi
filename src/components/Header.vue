@@ -96,7 +96,7 @@ export default {
                 state.lastSearch = searchTerm;
                 state.test = [];
                 
-                const res = await axios.get(`http://api.tvmaze.com/search/shows?q=${searchTerm}`)
+                const res = await axios.get(`https://api.tvmaze.com/search/shows?q=${searchTerm}`)
 
                 if (res.data) {
                     state.shows = res?.data
