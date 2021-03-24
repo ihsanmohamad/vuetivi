@@ -40,14 +40,13 @@
                             type="search"  
                             class="w-full py-2 text-sm pr-2  rounded-md pl-10 outline-none bg-gray-700 text-gray-100" 
                             placeholder="Search..."
-                            :value="state.lastSearch" @blur="isVisible()" @input="debounce(function () {
+                            :value="state.lastSearch"  @input="debounce(function () {
                                 state.lastSearch = $event.target.value
                                 fetchSearchResults(state.lastSearch)
                             })"
                             autoComplete="off" />
-                            <div v-if="state.shows.length >0 " class="absolute z-20 w-full bg-gray-800">
-                                
-                            <SearchResult  v-for="show in state.shows" :key="show.id" :show="show" @goTo="goTo"/>
+                            <div v-if="state.isVisible " class="absolute z-50 w-full bg-gray-800">
+                            <SearchResult  v-for="show in state.shows" :key="show.show.id" :show="show" @click="goTo(show.show.id)" />
                             </div>
                             </div>
                         </div>
@@ -74,18 +73,17 @@ import axios from 'axios'
 
 export default {
     components: {SearchResult },
-    setup(){
+    setup({emit}){
         const router = useRouter();
 
-        const isVisible = ()=> {
-            state.shows =[]
-        };
+       
 
         const state = reactive({
             shows: Object,
             loading: false,
             lastSearch: "",
             mobileMenu: false,
+            isVisible: true
         })
 
         const fetchSearchResults = async (searchTerm) => {
@@ -103,12 +101,15 @@ export default {
                 }
             }
             state.loading = false
-            if (!state.lastSearch || state.lastSearch === "" || isVisible === true) {
+            if (!state.lastSearch || state.lastSearch === "" ) {
                 state.shows = []
+                state.lastSearch = ""
             }
         }
 
-       
+       const isVisible = () =>{
+           state.isVisible = false
+       }
 
         function createDebounce() {
             let timeout = null;
@@ -120,12 +121,13 @@ export default {
             };
         }
 
-        const goTo = () =>{
-            router.push('/shows/5')
-        }
+       const goTo =  (id) =>{
+            router.push(`/shows/${id}`)
+            state.shows = []
+       }
         
 
-        return { debounce: createDebounce() ,router, state, fetchSearchResults, isVisible, goTo }
+        return { debounce: createDebounce() ,router, state, fetchSearchResults,  isVisible, goTo }
     }
 }
 </script>

@@ -33,6 +33,10 @@ export const routes = [
     ]
   },
   { path: '/login' , component: Login },
+  {
+    path: '/shows/:slug',
+    component: ShowDetail
+  },
   { path: '/register' , component: Register },
   { path: '/:path(.*)', component: NotFound },
 ]

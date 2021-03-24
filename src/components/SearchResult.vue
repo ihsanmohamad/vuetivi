@@ -1,7 +1,7 @@
 <template>
-
-    <div @click="$emit('goTo')" class="cursor-pointer h-full rounded-md text-left px-4 py-2 bg-gray-700 w-full justify-end border-t-2 border-gray-900">
+    <div  class="cursor-pointer h-full rounded-md text-left px-4 py-2 bg-gray-700 w-full justify-end border-t-2 border-gray-900">
         <div class="flex items-center flex-row">
+            
             <img class="inline-block object-cover object-center w-9 h-16  bg-gray-100 rounded" :src="show.show.image?.original ? show.show.image?.original : `https://static.tvmaze.com/images/no-img/no-img-landscape-text.png`" /> <span class="flex flex-col flex-grow pl-4">
             <span  class="font-bold text-lg text-gray-100">{{ show.show.name ? show.show.name : "null" }}</span>
             <p v-if="show.show.rating.average" class="flex flex-row text-sm text-gray-100"> {{show.show.rating.average}}<svg class="w-4 h-4 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 15" fill='#FFFF00'>
@@ -14,23 +14,21 @@
            
         </div>
     </div>
-    
 </template>
 
 <script>
+import { useRouter } from 'vue-router'
 export default {
     props: {
         show: Object
     },
     emit: ['goTo'],
-    setup(props, context){
-        context.emit('goTo')
+    setup(props, { emit }){
+        const router = useRouter()
+        
 
-        const test = () => {
-            console.log("test")
-            router.push(`/shows/${show.show.id}`)
-        }
-        return { test }
+        
+        return {  router }
     }
 }
 </script>
